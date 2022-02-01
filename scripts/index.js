@@ -27,29 +27,32 @@ const popupImageCard = document.querySelector('.popup__image-card');
 const popupImagClose  = popupTypeImage.querySelector(".popup__close");
 const popupimageTitle  = popupTypeImage.querySelector(".popup__image-title");
 
+function openPopup(modal) {
+  modal.classList.add("popup_open");
+};
 
-function popupCardToggle(modal) {
-  modal.classList.toggle("popup_open");
+function closePopup(modal) {
+  modal.classList.remove("popup_open");
 };
 
 popupOpenButton.addEventListener("click", function() {
-  popupCardToggle(popupProfile)
+  openPopup(popupProfile)
   popupName.value = profileTitle.textContent;
   popupInfo.value = profileSubtitle.textContent;
 });
 
 popupCloseButton.addEventListener("click", function() {
-  popupCardToggle(popupProfile)
+  closePopup(popupProfile)
 });
 
-function formSubmitHandler (evt) {
+function changeInfoProfile (evt) {
   evt.preventDefault();
   profileTitle.textContent = popupName.value;
   profileSubtitle.textContent = popupInfo.value;
-  popupCardToggle(popupProfile)
+  closePopup(popupProfile)
 };
 
-formProfile.addEventListener ('submit', formSubmitHandler);
+formProfile.addEventListener ('submit', changeInfoProfile);
 
 const initialCards = [
   {
@@ -100,7 +103,7 @@ function createCard(cardData) {
   elementsTitle.textContent = cardData.name;
 
   elementsImage.addEventListener('click', () => {
-    popupCardToggle(popupTypeImage)
+    openPopup(popupTypeImage)
     popupImageCard.src = cardData.link
     popupimageTitle.textContent = cardData.name
     popupImageCard.alt = elementsTitle.textContent
@@ -109,7 +112,7 @@ function createCard(cardData) {
   return elementsClone;
 };
 
-popupImagClose.addEventListener("click", function() {popupCardToggle(popupTypeImage)});
+popupImagClose.addEventListener("click", function() {closePopup(popupTypeImage)});
 
 initialCards.forEach(renderPlaceCard);
 
@@ -118,16 +121,12 @@ function renderPlaceCard (item) {
   elements.prepend(cardElement);
 }
 
-function popupCardToggle(modal) {
-  modal.classList.toggle("popup_open");
-};
-
 popupCardOpen.addEventListener("click", function() {
-  popupCardToggle(popupCard)
+  openPopup(popupCard)
 });
 
 popupCardClose.addEventListener("click", function() {
-  popupCardToggle(popupCard)
+  closePopup(popupCard)
 });
 
 formCard.addEventListener("submit", (evt) => {
@@ -138,5 +137,6 @@ formCard.addEventListener("submit", (evt) => {
    name: nameValue,
    link: linkValue
  });
- popupCardToggle(popupCard)
+ formCard.reset();
+ closePopup(popupCard)
 });
