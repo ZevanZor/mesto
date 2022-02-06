@@ -1,3 +1,5 @@
+const popup = document.querySelector('.popup');
+
 const popupOpenButton = document.querySelector(".profile__edit-button");
 
 const popupProfile = document.querySelector(".popup_type_edit");
@@ -8,7 +10,7 @@ const popupName = document.querySelector(".popup__input_type_name");
 const popupInfo = document.querySelector(".popup__input_type_info");
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
-const formProfile = popupProfile.querySelector(".popup__profile");
+const formProfile = popupProfile.querySelector(".popup__form");
 
 const elements = document.querySelector(".elements");
 const elementsTemplate = document.querySelector(".elements__template").content;
@@ -16,7 +18,7 @@ const elementsTemplate = document.querySelector(".elements__template").content;
 const popupCard = document.querySelector(".popup_type_add-card");
 const popupCardOpen = document.querySelector(".profile__add-button");
 const popupCardClose  = popupCard.querySelector(".popup__close");
-const formCard = popupCard.querySelector(".popup__profile");
+const formCard = popupCard.querySelector(".popup__form");
 const inputNameCard = document.querySelector(".popup__input_type_card-name");
 const inputLinkCard = document.querySelector(".popup__input_type_card-link");
 const popupCardSave = popupCard.querySelector(".popup__save");
@@ -33,6 +35,7 @@ function openPopup(modal) {
 
 function closePopup(modal) {
   modal.classList.remove("popup_open");
+  document.addEventListener('click', closePopupByClickOverlay); 
 };
 
 popupOpenButton.addEventListener("click", function() {
@@ -140,3 +143,17 @@ formCard.addEventListener("submit", (evt) => {
  formCard.reset();
  closePopup(popupCard)
 });
+
+
+
+document.addEventListener('keydown', function(evt) {
+  if (evt.key === 'Escape') {
+    closePopup(document.querySelector('.popup_open'))
+  }
+  });
+
+  function closePopupByClickOverlay(e) {
+    if (e.target.classList.contains('popup')){
+      closePopup(document.querySelector('.popup_open'))
+    }
+  };
