@@ -31,11 +31,16 @@ const popupimageTitle  = popupTypeImage.querySelector(".popup__image-title");
 
 function openPopup(modal) {
   modal.classList.add("popup_open");
+  document.addEventListener('keydown', closePopupEscape);
+  document.addEventListener('click', closePopupByClickOverlay);
+  popupCardSave.disabled = false;
+  popupCardSave.classList.add('popup__save_disabled');
 };
 
 function closePopup(modal) {
   modal.classList.remove("popup_open");
-  document.addEventListener('click', closePopupByClickOverlay); 
+  document.removeEventListener('click', closePopupByClickOverlay);
+  document.removeEventListener('keydown', closePopupEscape);
 };
 
 popupOpenButton.addEventListener("click", function() {
@@ -102,8 +107,9 @@ function createCard(cardData) {
     elementsLike.classList.toggle('elements__like_active');
   })
 
-  elementsImage.style.backgroundImage = `url(${cardData.link})`
+  elementsImage.src = cardData.link
   elementsTitle.textContent = cardData.name;
+  elementsImage.alt = elementsTitle.textContent
 
   elementsImage.addEventListener('click', () => {
     openPopup(popupTypeImage)
@@ -145,15 +151,13 @@ formCard.addEventListener("submit", (evt) => {
 });
 
 
+function closePopupEscape(evt) {
+  if(evt.key === 'Escape')
+  closePopup(document.querySelector('.popup_open'))
+};
 
-document.addEventListener('keydown', function(evt) {
-  if (evt.key === 'Escape') {
+function closePopupByClickOverlay(e) {
+  if (e.target.classList.contains('popup')){
     closePopup(document.querySelector('.popup_open'))
   }
-  });
-
-  function closePopupByClickOverlay(e) {
-    if (e.target.classList.contains('popup')){
-      closePopup(document.querySelector('.popup_open'))
-    }
-  };
+};

@@ -1,6 +1,5 @@
 function submitForm (event) {
   event.preventDefault();
-  console.log('i')
 };
 
 function showError (input, errorContainer, { inputErrorClass, errorVisibleClass }) {
@@ -56,12 +55,12 @@ forms.forEach(form =>{
 });
 };
 
-enableValidation ({
+enableValidation({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   errorSelector: '.error-message',
   errorVisibleClass: 'error-message_visible',
   inputErrorClass: 'popup__input_type_error',
   buttonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__save_disabled',
+  inactiveButtonClass: 'popup__save_disabled'
 });
