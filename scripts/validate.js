@@ -38,14 +38,23 @@ function validateInput(form, input, classes) {
   toggleButton (form, classes);
 };
 
-function enableValidation ({formSelector, inputSelector, ...rest}) {
+function enableValidation ({formSelector, inputSelector, buttonOpenCardSelector, buttonOpenProfileSelector,...rest}) {
 const forms = document.querySelectorAll(formSelector);
+
+const buttonOpenProfile = document.querySelector(buttonOpenProfileSelector);
+const buttonOpenCard = document.querySelector(buttonOpenCardSelector);
 
 forms.forEach(form =>{
   form.addEventListener('submit', submitForm);
-
   const inputs = form.querySelectorAll(inputSelector);
 
+  buttonOpenProfile.addEventListener('click', () => {
+    toggleButton(form, rest);
+  });
+  buttonOpenCard.addEventListener('click', () => {
+    toggleButton(form, rest);
+  });
+  
   inputs.forEach(input => {
     input.addEventListener('input', () => {
       validateInput(form, input, rest)
@@ -62,5 +71,7 @@ enableValidation({
   errorVisibleClass: 'error-message_visible',
   inputErrorClass: 'popup__input_type_error',
   buttonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__save_disabled'
+  inactiveButtonClass: 'popup__save_disabled',
+  buttonOpenProfileSelector: '.profile__edit-button',
+  buttonOpenCardSelector: '.profile__add-button'
 });

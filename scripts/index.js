@@ -33,8 +33,6 @@ function openPopup(modal) {
   modal.classList.add("popup_open");
   document.addEventListener('keydown', closePopupEscape);
   document.addEventListener('click', closePopupByClickOverlay);
-  popupCardSave.disabled = false;
-  popupCardSave.classList.add('popup__save_disabled');
 };
 
 function closePopup(modal) {
