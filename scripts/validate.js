@@ -1,20 +1,56 @@
+const configs = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  errorSelector: '.error-message',
+  errorVisibleClass: 'error-message_visible',
+  inputErrorClass: 'popup__input_type_error',
+  buttonSelector: '.popup__save',
+  inactiveButtonClass: 'popup__save_disabled',
+};
+
+const showError = (input, errorContainer, configs) => {
+  input.classList.add(configs.inputErrorClass);
+  errorContainer.classList.add(configs.errorVisibleClass);
+  errorContainer.textContent = input.validationMessage;
+};
+
+const hideError = (input, errorContainer, configs) => {
+  input.classList.remove(configs.inputErrorClass);
+  errorContainer.classList.remove(configs.errorVisibleClass);
+  errorContainer.textContent = '';
+};
+
+const enableValidation = (configs) => {
+  const forms = document.querySelectorAll(configs.formSelector);
+  
+  forms.forEach(form =>{
+    form.addEventListener('submit', submitForm);
+    const inputs = form.querySelectorAll(configs.inputSelector);
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        validateInput(form, input, configs)
+      });
+    });
+    toggleButton (form, configs);
+  });
+  };
+
+  const validateInput =(form, input, classes) => {
+    const errorContainer = form.querySelector(`#error-${input.id}`);
+  
+    if(input.validity.valid) {
+      hideError(input, errorContainer, classes);
+    } else {
+      showError(input, errorContainer, classes);
+    }
+    toggleButton (form, classes);
+  };  
+
 function submitForm (event) {
   event.preventDefault();
 };
 
-function showError (input, errorContainer, { inputErrorClass, errorVisibleClass }) {
-  input.classList.add(inputErrorClass);
-  errorContainer.classList.add(errorVisibleClass);
-  errorContainer.textContent = input.validationMessage;
-};
-
-function hideError (input, errorContainer, { inputErrorClass, errorVisibleClass }) {
-  input.classList.remove(inputErrorClass);
-  errorContainer.classList.remove(errorVisibleClass);
-  errorContainer.textContent = '';
-};
-
-function toggleButton (form, { buttonSelector, inactiveButtonClass }) {
+const toggleButton = (form, { buttonSelector, inactiveButtonClass }) => {
   const button = form.querySelector(buttonSelector);
   const isFormValid = form.checkValidity();
 
@@ -27,51 +63,9 @@ function toggleButton (form, { buttonSelector, inactiveButtonClass }) {
   };
 };
 
-function validateInput(form, input, classes) {
-  const errorContainer = form.querySelector(`#error-${input.id}`);
-
-  if(input.validity.valid) {
-    hideError(input, errorContainer, classes);
-  } else {
-    showError(input, errorContainer, classes);
-  }
-  toggleButton (form, classes);
+const disableButton = (button) => {
+  button.disabled = true;
+  button.classList.add(configs.inactiveButtonClass)
 };
 
-function enableValidation ({formSelector, inputSelector, buttonOpenCardSelector, buttonOpenProfileSelector,...rest}) {
-const forms = document.querySelectorAll(formSelector);
-
-const buttonOpenProfile = document.querySelector(buttonOpenProfileSelector);
-const buttonOpenCard = document.querySelector(buttonOpenCardSelector);
-
-forms.forEach(form =>{
-  form.addEventListener('submit', submitForm);
-  const inputs = form.querySelectorAll(inputSelector);
-
-  buttonOpenProfile.addEventListener('click', () => {
-    toggleButton(form, rest);
-  });
-  buttonOpenCard.addEventListener('click', () => {
-    toggleButton(form, rest);
-  });
-  
-  inputs.forEach(input => {
-    input.addEventListener('input', () => {
-      validateInput(form, input, rest)
-    });
-  });
-  toggleButton (form, rest);
-});
-};
-
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  errorSelector: '.error-message',
-  errorVisibleClass: 'error-message_visible',
-  inputErrorClass: 'popup__input_type_error',
-  buttonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__save_disabled',
-  buttonOpenProfileSelector: '.profile__edit-button',
-  buttonOpenCardSelector: '.profile__add-button'
-});
+enableValidation(configs)

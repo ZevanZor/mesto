@@ -130,6 +130,7 @@ function renderPlaceCard (item) {
 
 popupCardOpen.addEventListener("click", function() {
   openPopup(popupCard)
+  
 });
 
 popupCardClose.addEventListener("click", function() {
@@ -146,6 +147,7 @@ formCard.addEventListener("submit", (evt) => {
  });
  formCard.reset();
  closePopup(popupCard)
+ disableButton(popupCardSave)
 });
 
 
