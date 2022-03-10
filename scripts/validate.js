@@ -8,6 +8,7 @@ const configs = {
   inactiveButtonClass: 'popup__save_disabled',
 };
 
+
 const showError = (input, errorContainer, configs) => {
   input.classList.add(configs.inputErrorClass);
   errorContainer.classList.add(configs.errorVisibleClass);
