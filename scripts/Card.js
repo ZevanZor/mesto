@@ -9,7 +9,7 @@ export class Card {
     this._template = document.querySelector(cardTemplateSelector).content.querySelector('.elements__groups')
   }
   //like
-  _likeActive() {
+  _likeCard() {
     this._elementsLike.classList.toggle('elements__like_active');
   }
   //удаление карты
@@ -17,23 +17,23 @@ export class Card {
     this._elementsClone.remove();
   };
   //открытие модалки
-  _imagePopupOpen() {
+  _handleImageClick() {
     openPopup(popupTypeImage);
     popupImageCard.src = this._link;
     popupimageTitle.textContent = this._name;
-    popupImageCard.alt = this._elementsTitle.textContent;
+    popupImageCard.alt = this._name;
   }
  // обработчики 
   _setEventListeners() {
     this._elementsDelete.addEventListener('click',() => this._deleteCard());
-    this._elementsLike.addEventListener('click',() => this._likeActive());
-    this._elementsImage.addEventListener('click',() => this._imagePopupOpen());
+    this._elementsLike.addEventListener('click',() => this. _likeCard());
+    this._elementsImage.addEventListener('click',() => this._handleImageClick());
   }
 
   _fillCard() {
     this._elementsImage.src = this._link;
     this._elementsTitle.textContent = this._name;
-    this._elementsImage.alt = this._elementsTitle.textContent;
+    this._elementsImage.alt = this._name;
   }
   //создание карточки
   createCard () {
