@@ -10,13 +10,11 @@ export class FormValidator  {
     this._inputs = this._form.querySelectorAll(this._inputSelector);
   };
   
-
 _showError (input){
   input.classList.add(this._inputErrorClass);
   this._errorContainer.classList.add(this._errorVisibleClass);
   this._errorContainer.textContent = input.validationMessage;
 };
-
 
 _hideError (input)  {
   input.classList.remove(this._inputErrorClass);
@@ -33,7 +31,6 @@ _disableSubmitButton () {
   this._button.classList.remove(this._inactiveButtonClass);
   this._button.disabled = false;
 }
-
 
 toggleButton = () => {
   const isFormValid = this._form.checkValidity();
@@ -58,8 +55,6 @@ _validateInput (input) {
 
   enableValidation () {
       this._form.addEventListener('submit', this._submitForm);
-
-      
 
       this._inputs.forEach(input => {
         input.addEventListener('input', () => {

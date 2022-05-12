@@ -1,11 +1,8 @@
-import { openPopup } from "./utils.js";
-import { popupImageCard, popupimageTitle, popupTypeImage } from "./constants.js"
-
 export class Card {
-  constructor (data, cardTemplateSelector) {
-   // this._data = data;
+  constructor (data, cardTemplateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
+    this._handleCardClick = handleCardClick;
     this._template = document.querySelector(cardTemplateSelector).content.querySelector('.elements__groups')
   }
   //like
@@ -16,18 +13,10 @@ export class Card {
   _deleteCard() {
     this._elementsClone.remove();
   };
-  //открытие модалки
-  _handleImageClick() {
-    openPopup(popupTypeImage);
-    popupImageCard.src = this._link;
-    popupimageTitle.textContent = this._name;
-    popupImageCard.alt = this._name;
-  }
- // обработчики 
   _setEventListeners() {
     this._elementsDelete.addEventListener('click',() => this._deleteCard());
     this._elementsLike.addEventListener('click',() => this. _likeCard());
-    this._elementsImage.addEventListener('click',() => this._handleImageClick());
+    this._elementsImage.addEventListener('click',() => this._handleCardClick());
   }
 
   _fillCard() {
@@ -50,5 +39,6 @@ export class Card {
     return this._elementsClone;
   };
 }
+
 
 

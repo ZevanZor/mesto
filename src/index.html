@@ -4,29 +4,28 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 <body class="page">
   
   <header class="header">
-    <img src="./images/Vector.svg" alt="Логотип заголовка" class="header__logo">
+    <img src='<%=require("./images/Vector.svg")%>' alt="Логотип заголовка" class="header__logo">
   </header>
   <main>
     <section class="profile">
       <div class="profile__main">
-        <img src="./images/image.jpg" alt="Аватар" class="profile__avatar">
+        <img src='<%=require("./images/image.jpg")%>' alt="Аватар" class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <button class="profile__edit-button" type="button">
-            <img src="./images/Vectori.svg" alt="кнопка редактирования профиля">
+            <img src='<%=require("./images/Vectori.svg")%>' alt="кнопка редактирования профиля">
           </button>
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
         
       </div>
       <button class="profile__add-button" type="button">
-        <img src="./images/Vector+.svg" alt="кнопка добавления контента">
+        <img src='<%=require("./images/Vector+.svg")%>' alt="кнопка добавления контента">
       </button>
     </section>
     <section class="elements">
@@ -82,6 +81,5 @@
       <h2 class="popup__image-title"></h2>
     </div>
   </div>
-  <script type="module" src="./scripts/index.js"></script>
 </body>
 </html>
