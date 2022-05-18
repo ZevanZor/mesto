@@ -1,5 +1,5 @@
 import { FormValidator } from "../components/FormValidator";
-import {initialCards, configs} from "../components/constants.js";
+import {initialCards, configs} from "../utils/constants.js";
 import { Card } from "../components/Card.js";
 import { Section } from "../components/Section.js";
 import {PopupWithImage} from '../components/PopupWithImage.js'
@@ -47,7 +47,7 @@ function createCard (data) {
 
 function renderPlaceCard (data, list) {
    const cardElement = createCard(data);
-   list.prepend(cardElement)
+  section.addItem(cardElement)
 }
 
 popupCardOpen.addEventListener("click", function() {
@@ -55,7 +55,7 @@ popupCardOpen.addEventListener("click", function() {
   
 });
 
-const NewCardHandlerSubmit = (data) => {
+const newCardHandlerSubmit = (data) => {
   const card = createCard({
     link: data.link,
     name: data.name
@@ -78,7 +78,7 @@ const imagePopupe = new PopupWithImage('.popup_type_image');
 imagePopupe.setEventListeners()
 
 const editProfilePopup = new PopupWithForm(".popup_type_edit" , changeInfoProfile);
-const addCardPopup = new PopupWithForm(".popup_type_add-card", NewCardHandlerSubmit);
+const addCardPopup = new PopupWithForm(".popup_type_add-card", newCardHandlerSubmit);
 
 editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
