@@ -13,6 +13,7 @@ Mesto - интерактивная страница создан для трен
 * Верстка по БЭМ
 * DOM
 * JavaScript
+* Api
 
 ### GitHub Pages
 
