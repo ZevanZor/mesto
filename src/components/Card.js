@@ -36,6 +36,7 @@ export class Card {
   //удаление карты
   deleteCard() {
     this._elementsClone.remove();
+    this._elementsClone = null
   };
   _setEventListeners() {
     this._elementsLike.addEventListener('click',() => this._handleLikeClicked(this._id));

@@ -26,9 +26,6 @@ _saveLoading () {
       this._saveLoading()
     })
   }
-  changeSwitchCallBack(newCallBack){
-    this._callbackSubmitForm = newCallBack;
-  }
   close() {
     super.close()
     this._form.reset()

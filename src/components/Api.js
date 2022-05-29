@@ -11,7 +11,7 @@ getProfile() {
     }).then((res) =>
         this._checkServerResponce(res)
     )
-    .catch(console.log())
+    
 }
 
 getInitialCards() {
@@ -20,7 +20,6 @@ getInitialCards() {
     }).then((res) =>
         this._checkServerResponce(res)
     )
-    .catch(console.log())
   }
  // Редактирование профиля
 editProfile(name, about) {
@@ -35,7 +34,6 @@ editProfile(name, about) {
     }).then((res) =>
         this._checkServerResponce(res)
     )
-    .catch(console.log())
 }
 
 //Добавление новой карточки
@@ -50,7 +48,6 @@ addCard(name, link) {
     }).then((res) =>
         this._checkServerResponce(res)
     )
-    .catch(console.log())
 }
 deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
@@ -59,7 +56,6 @@ deleteCard(id) {
     }).then((res) =>
         this._checkServerResponce(res)
     )
-    .catch(console.log())
 }
 
 // проверка ответа от сервера
@@ -78,7 +74,6 @@ addLike(id) {
     }).then((res) =>
         this._checkServerResponce(res)
     )
-    .catch(console.log())
 }
 
 deleteLike(id) {
@@ -88,7 +83,6 @@ deleteLike(id) {
     }).then((res) =>
         this._checkServerResponce(res)
     )
-    .catch(console.log())
 }
 
 changeAvatar(avatar) {
@@ -101,7 +95,6 @@ changeAvatar(avatar) {
     }).then((res) =>
         this._checkServerResponce(res)
     )
-    .catch(console.log())
 }
 }
 

@@ -1,5 +1,6 @@
 import { FormValidator } from "../components/FormValidator";
-import { configs, profileOpenButton,
+import { configs,
+  profileOpenButton,
   popupName,
   popupInfo,
   formProfile,
@@ -13,21 +14,17 @@ import {PopupWithImage} from '../components/PopupWithImage.js'
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo} from "../components/UserInfo.js";
 import { api } from "../components/Api";
+import { PopupWithDelete } from "../components/PopupWithDelete";
 
 import './index.css';
 import { data } from "autoprefixer";
-
 let userId 
-api.getProfile()
-.then(res => {
+Promise.all([api.getProfile(),api.getInitialCards()])
+.then(([res , cardList]) => {
   userInfo.setUserInfo(res.name , res.about)
   userInfo.setAvatar(res.avatar)
-  userId = res._id
-})
-
-api.getInitialCards()
-.then(cardList => {
-  cardList.forEach(data => {
+  userId = res._id;
+  cardList.reverse().forEach(data => {
     const card = createCard({
       link: data.link,
       name: data.name,
@@ -38,8 +35,8 @@ api.getInitialCards()
     })
     section.addItem(card)
   })
-})
-
+  .catch(console.log())
+});
 
 const validateCard = new FormValidator(configs, formCard);
 const vallidateProfile = new FormValidator(configs, formProfile);
@@ -57,13 +54,15 @@ profileOpenButton.addEventListener("click", function() {
 });
 
 const changeInfoProfile = (data) => {
- const {name, info } = data;
- api.editProfile(name, info)
- .then(() => {
-  userInfo.setUserInfo(name, info);
- }) 
-  editProfilePopup.close()
-};
+  api.editProfile(data.name, data.info)
+  .then((res)=> {
+   userInfo.setUserInfo(res.name, res.about);
+  })
+  .catch(console.log())
+  .finally(() => {
+    editProfilePopup.close()
+  })
+}
 
 const cardTemplateSelector = '.elements__template';
 
@@ -82,6 +81,7 @@ function createCard (data) {
           card.deleteCard()
           confirmDelete.close()
         })
+        .catch(console.log())
       })
     },
     (id) => {
@@ -90,12 +90,13 @@ function createCard (data) {
         .then(res => {
           card.setLikes(res.likes)
         })
-        .catch(console.log)
+        .catch(console.log())
       } else {
         api.addLike(id)
         .then(res => {
           card.setLikes(res.likes)
-          }).catch(console.log)
+          })
+        .catch(console.log())
     }
 });
   return card.createCard();
@@ -116,10 +117,6 @@ profileButtonAvatar.addEventListener('click', () => {
   popupAvatar.open()
   validateCard.toggleButton()
 });
-
-
-
-
 
 function renderPlaceCard (data, list) {
    const cardElement = createCard(data);
@@ -144,6 +141,7 @@ const newCardHandlerSubmit = (data) => {
    section.addItem(card);
    addCardPopup.close()
  })
+  .catch(console.log())
    validateCard.toggleButton();
 }
 
@@ -161,13 +159,11 @@ imagePopupe.setEventListeners()
 
 const editProfilePopup = new PopupWithForm(".popup_type_edit" , changeInfoProfile);
 const addCardPopup = new PopupWithForm(".popup_type_add-card", newCardHandlerSubmit);
-const confirmDelete = new PopupWithForm(".popup_type_delete");
 const popupAvatar = new PopupWithForm(".popup_type_avatar", submitAvatarForm);
 
 
 editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
-confirmDelete.setEventListeners();
 popupAvatar.setEventListeners()
 
 const userInfo = new UserInfo ({
@@ -175,3 +171,6 @@ nameElementSelector: '.profile__title',
 jobElementSelector: '.profile__subtitle',
 avatarElementSelector: '.profile__avatar'
 })
+
+const confirmDelete = new PopupWithDelete(".popup_type_delete");
+confirmDelete.setEventListeners();
