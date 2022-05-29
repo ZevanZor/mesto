@@ -6,7 +6,12 @@ export class PopupWithForm extends Popup{
     this._callbackSubmitForm = callbackSubmitForm
     this._form = this._popup.querySelector('.popup__form');
     this._inputs = [...this._form.querySelectorAll('.popup__input')];
+    this._popupSave = this._form.querySelector('.popup__save')
   }
+
+_saveLoading () {
+  this._popupSave.textContent = 'Сохранение...'
+}
   _getInputValues() {
     this._values = {};
     this._inputs.forEach((input) => {this._values[input.name] = input.value})
@@ -15,11 +20,15 @@ export class PopupWithForm extends Popup{
 
   setEventListeners() {
     super.setEventListeners()
-    this._form.addEventListener('submit', () => {
+    this._form.addEventListener('submit', (event) => {
+      event.preventDefault();
       this._callbackSubmitForm(this._getInputValues())
+      this._saveLoading()
     })
   }
-
+  changeSwitchCallBack(newCallBack){
+    this._callbackSubmitForm = newCallBack;
+  }
   close() {
     super.close()
     this._form.reset()
