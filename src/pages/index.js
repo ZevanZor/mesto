@@ -35,8 +35,8 @@ Promise.all([api.getProfile(),api.getInitialCards()])
     })
     section.addItem(card)
   })
-  .catch(console.log())
-});
+})
+.catch(console.log())
 
 const validateCard = new FormValidator(configs, formCard);
 const vallidateProfile = new FormValidator(configs, formProfile);
@@ -57,10 +57,11 @@ const changeInfoProfile = (data) => {
   api.editProfile(data.name, data.info)
   .then((res)=> {
    userInfo.setUserInfo(res.name, res.about);
+   editProfilePopup.close()
   })
   .catch(console.log())
   .finally(() => {
-    editProfilePopup.close()
+    editProfilePopup.returnBatton()
   })
 }
 
@@ -111,11 +112,14 @@ api.changeAvatar(data.link)
   popupAvatar.close()
 })
 .catch(console.log)
+.finally(() => {
+  popupAvatar.returnBatton()
+})
 };
 
 profileButtonAvatar.addEventListener('click', () => {
   popupAvatar.open()
-  validateCard.toggleButton()
+  vallidateProfileAvatar.toggleButton()
 });
 
 function renderPlaceCard (data, list) {
@@ -137,12 +141,16 @@ const newCardHandlerSubmit = (data) => {
      likes: res.likes,
      id: res._id,
      userId: userId,
+     ownerId: res.owner._id
    })
    section.addItem(card);
    addCardPopup.close()
+   validateCard.toggleButton()
  })
   .catch(console.log())
-   validateCard.toggleButton();
+   .finally(() => {
+    addCardPopup.returnBatton()
+  })
 }
 
 

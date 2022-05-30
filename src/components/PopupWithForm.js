@@ -12,6 +12,9 @@ export class PopupWithForm extends Popup{
 _saveLoading () {
   this._popupSave.textContent = 'Сохранение...'
 }
+  returnBatton() {
+    this._popupSave.textContent = 'Сохранение'
+  }
   _getInputValues() {
     this._values = {};
     this._inputs.forEach((input) => {this._values[input.name] = input.value})
